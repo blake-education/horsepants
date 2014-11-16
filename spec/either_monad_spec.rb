@@ -2,10 +2,18 @@ require 'horsepants'
 require 'tapp'
 
 RSpec.describe Horsepants::Monads::Either do
+  module TestModPiping
+    horsepants!
+
+    ns e: 'Horsepants::Monads::Either'
+
+    def a_method(a,b)
+      e.success([a,b])
+    end
+  end
   before do
     @m = Horsepants::Monads
     @em = Horsepants::Monads::Either
-
   end
 
   it "units like a motherfucker" do
@@ -44,5 +52,14 @@ RSpec.describe Horsepants::Monads::Either do
 
     expect(pipe_fail.value).to be_nil
     expect(pipe_fail.failure?).to eq(true)
+  end
+
+  it "works with partial application" do
+    p = @em.pipe "thing",
+      TestModPiping.lambdas.a_method(1),
+      TestModPiping.lambdas.a_method(2)
+
+    expect(p.value).to eql([2, [1,"thing"]])
+    expect(p.failure?).to eq(false)
   end
 end

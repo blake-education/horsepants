@@ -12,8 +12,7 @@ module Horsepants
       end
 
       def method_missing(meth, *args, &blk)
-        # XXX partial application?
-        ctx.method(meth).to_proc
+        ctx.method(meth).to_proc.curry[*args]
       end
     end
   end

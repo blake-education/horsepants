@@ -8,6 +8,10 @@ RSpec.describe Horsepants::Lambdaize do
     def its_a_function(x)
       x + 1
     end
+
+    def takes_2_args(x, y)
+      [x+1, y+1]
+    end
   end
 
   module OtherTestMod
@@ -24,6 +28,10 @@ RSpec.describe Horsepants::Lambdaize do
 
   it "lambdaizes function" do
     expect(TestMod.lambdas.its_a_function).to be_an_instance_of(Proc)
+  end
+
+  it "lambdaizes with partial application" do
+    expect(TestMod.lambdas.takes_2_args(3)[4]).to eq([4,5])
   end
 
   it "is a nice lambda" do
