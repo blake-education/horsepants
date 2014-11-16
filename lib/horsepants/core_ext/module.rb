@@ -8,6 +8,9 @@ module Horsepants
           def self.#{name}
             #{to}
           end
+          def #{name}
+            #{to}
+          end
         EOF
       end
     end
