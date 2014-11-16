@@ -11,8 +11,6 @@ module Horsepants
         case value
         when Either
           value
-        when Array
-          new(value[0], value[1])
         when NilClass, FalseClass
           failure(value)
         else
