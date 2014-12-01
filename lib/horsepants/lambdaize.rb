@@ -12,7 +12,12 @@ module Horsepants
       end
 
       def method_missing(meth, *args, &blk)
-        ctx.method(meth).to_proc.curry[*args]
+        m = ctx.method(meth)
+        if args.size == m.arity
+          m.to_proc
+        else
+          m.to_proc.curry(m.arity)[*args]
+        end
       end
     end
   end
